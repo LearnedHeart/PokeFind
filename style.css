@@ -271,11 +271,15 @@ header {
 .process-step:not(:last-child)::after {
     content: "↓";
     position: absolute;
-    left: 28px; /* Centré sous l'icône */
-    bottom: -35px;
-    font-size: 1.5rem;
-    color: var(--border-light);
-    font-weight: 300;
+    left: 30px; /* center under the circular icon (half of 60px)
+                  adjust if your .step-icon size changes */
+    bottom: -30px;
+    font-size: 1.6rem;
+    color: rgba(100,116,139,0.25);
+    font-weight: 400;
+    display: inline-block;
+    width: 28px;
+    text-align: center;
 }
 
 /* Style des icônes rondes */
@@ -288,10 +292,16 @@ header {
     justify-content: center;
     font-size: 1.5rem;
     flex-shrink: 0;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+    border: 1px solid rgba(2,6,23,0.04);
+    overflow: hidden;
 }
 .icon-red { background: #fee2e2; color: var(--poke-red); }
 .icon-blue { background: #dbeafe; color: var(--poke-blue); }
 .icon-yellow { background: #fef3c7; color: var(--poke-yellow); }
+
+.step-icon img { width: 28px; height: 28px; display: block; filter: saturate(0.95); }
+.step-icon:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(2,6,23,0.12); }
 
 .step-title {
     font-weight: 700;
