@@ -185,6 +185,8 @@ header {
     overflow: hidden;
 }
 
+
+
 /* Effet de survol : légère remontée et ombre plus forte */
 .hero-card:hover {
     transform: translateY(-6px) rotateZ(-0.1deg);
@@ -359,6 +361,14 @@ header {
 /* entrance helper */
 .animate-up { opacity: 0; transform: translateY(12px); }
 .animate-up.visible { opacity: 1; transform: translateY(0); transition: opacity 520ms ease, transform 520ms cubic-bezier(.22,.9,.35,1); }
+
+/* slide helpers */
+.animate-left { opacity: 0; transform: translateX(-18px); }
+.animate-left.visible { opacity: 1; transform: translateX(0); transition: opacity 420ms ease, transform 480ms cubic-bezier(.22,.9,.35,1); }
+.animate-right { opacity: 0; transform: translateX(18px); }
+.animate-right.visible { opacity: 1; transform: translateX(0); transition: opacity 420ms ease, transform 480ms cubic-bezier(.22,.9,.35,1); }
+.fade-in { opacity: 0; transform: none; }
+.fade-in.visible { opacity: 1; transition: opacity 520ms ease; }
 
 /* button micro-interactions */
 .btn { will-change: transform; }

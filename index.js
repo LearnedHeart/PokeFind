@@ -61,3 +61,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+// Staggered page-load animations (extra polish)
+document.addEventListener('DOMContentLoaded', () => {
+  const sequence = [
+    { sel: '.logo-container', cls: 'animate-left' },
+    { sel: '.nav-links .nav-item', cls: 'animate-up' },
+    { sel: '.header-actions', cls: 'animate-right' },
+    { sel: '.hero-card', cls: 'animate-up' },
+    { sel: '.process-step', cls: 'animate-up' },
+    { sel: '.stat-box', cls: 'animate-up' },
+    { sel: '.review-card', cls: 'fade-in' },
+    { sel: 'footer', cls: 'fade-in' }
+  ];
+
+  let baseDelay = 120;
+  sequence.forEach(group => {
+    const nodes = Array.from(document.querySelectorAll(group.sel));
+    nodes.forEach((node, i) => {
+      // ensure the helper class exists so visible transitions apply
+      node.classList.add(group.cls);
+      setTimeout(() => node.classList.add('visible'), baseDelay + i * 80);
+    });
+    baseDelay += 120;
+  });
+});
