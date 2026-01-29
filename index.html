@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeFinder - Trouvez vos cartes en temps réel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <linkcdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container nav-content">
+            <a href="#" class="logo-container">
+                <img src="assets/logo_temp.png" alt="Logo PokeFinder" class="logo-img">
+                <span class="brand-name">Poke<span>Finder</span></span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item">
+                    <span class="nav-icon" aria-hidden="true">
+                        <img src="assets/search.svg" alt="Chercher"/>
+                    </span>
+                    <span>Chercher un produit</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span class="nav-icon" id="map-icon" aria-hidden="true">
+                        <img src="assets/map.svg" alt="Carte"/>
+                    </span>
+                    <span>Carte interactive</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span class="nav-icon" aria-hidden="true">
+                        <img src="assets/store.svg" alt="Boutique"/>
+                    </span>
+                    <span>Trouver une boutique</span>
+                </a>
+            </nav>
+            <div class=" header-actions">
+                 <a href="#" class="btn btn-primary">Connexion</a>
+                <a href="#" class="nav-link-secondary">Devenir Partenaire</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container main-grid">
+        
+        <section class="hero-split">
+            <div class="hero-card card-user">
+                <div class="card-badge badge-blue">Pour les dresseurs</div>
+                <h2>COLLECTIONNEUR</h2>
+                <p class="lead-text">Trouvez les ETB & Boosters en stock autour de vous instantanément.</p>
+                <ul class="feature-list">
+                   <li><i class="fa-solid fa-check"></i> Alertes de stock en temps réel</li>
+                   <li><i class="fa-solid fa-check"></i> Comparateur de prix locaux</li>
+                </ul>
+                <div class="card-action">
+                    <a href="#" class="btn btn-outline-blue">Commencer la chasse</a>
+                </div>
+            </div>
+
+            <div class="hero-card card-seller">
+                <div class="card-badge badge-yellow">Pour les boutiques</div>
+                <h2>REVENDEUR</h2>
+                <p class="lead-text">Augmentez votre visibilité auprès des joueurs locaux et écoulez vos stocks.</p>
+                 <ul class="feature-list">
+                   <li><i class="fa-solid fa-check"></i> Mise en avant sur la carte</li>
+                   <li><i class="fa-solid fa-check"></i> Gestion de stock simplifiée</li>
+                </ul>
+                <div class="card-action">
+                    <a href="#" class="btn btn-outline-yellow">Créer un compte Pro</a>
+                </div>
+            </div>
+        </section>
+
+        <aside class="process-container">
+            <h3 class="process-heading">Comment ça marche ?</h3>
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="step-icon icon-red">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div class="step-content">
+                        <div class="step-title">1. Recherche précise</div>
+                        <p>Tapez le nom d'un pack, d'une ETB ou d'une carte spécifique.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon icon-blue">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <div class="step-content">
+                        <div class="step-title">2. Localisation Live</div>
+                        <p>Voyez instantanément les boutiques qui ont du stock près de chez vous.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon icon-yellow">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="step-content">
+                        <div class="step-title">3. Go au shop !</div>
+                        <p>Rendez-vous en boutique avant que le stock ne disparaisse.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <section class="container bottom-section">
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">150K+</div>
+                <div class="stat-label">Produits référencés</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">12k+</div>
+                <div class="stat-label">Dresseurs actifs</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">850</div>
+                <div class="stat-label">Boutiques Partenaires</div>
+            </div>
+        </div>
+
+        <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"L'outil indispensable. J'ai pu trouver 3 ETB 151 au prix retail dans une petite boutique que je ne connaissais même pas à 5km de chez moi."</p>
+            <div class="review-author">
+                <div class="author-avatar">T</div>
+                <div class="author-info">
+                    <strong>Thomas D.</strong>
+                    <span>Collectionneur Premium</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2024 PokeFinder. L'application des dresseurs malins.</p>
+            <div class="footer-links">
+                <a href="#">Mentions Légales</a>
+                <a href="#">CGU</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

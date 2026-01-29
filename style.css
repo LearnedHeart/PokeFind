@@ -1,0 +1,391 @@
+/* --- VARIABLES & THEME CLAIR --- */
+:root {
+    /* Palette principale Claire */
+    --bg-body: #f8fafc;      /* Gris très clair pour le fond */
+    --bg-surface: rgba(255,255,255,0.92);   /* Surface légèrement translucide pour laisser apparaître le fond */
+    --text-primary: #1e293b; /* Gris très foncé (presque noir) pour le texte principal */
+    --text-secondary: #64748b; /* Gris moyen pour les sous-titres */
+    --border-light: #e2e8f0; /* Bordure subtile */
+
+    /* Couleurs Pokémon (Ajustées pour le thème clair) */
+    --poke-red: #dc2626;
+    --poke-blue: #2563eb;
+    --poke-yellow: #d97706; /* Un jaune un peu plus foncé pour être lisible sur fond blanc */
+
+    /* Ombres (Au lieu des effets glossy/flous) */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+    --radius-md: 12px;
+    --radius-lg: 24px;
+}
+
+/* --- RESET DE BASE --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-body);
+    /* background image (user provided) */
+    background-image: url("assets/fond_temp.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; transition: all 0.2s; }
+ul { list-style: none; }
+
+/* --- UTILITAIRES --- */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+}
+
+/* Boutons standards */
+.btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--poke-red);
+    color: white;
+    border: 2px solid transparent;
+    box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover { background-color: #b91c1c; transform: translateY(-2px); box-shadow: var(--shadow-md);}
+
+/* Boutons contours (Outline) pour les cartes */
+.btn-outline-blue {
+    background: white;
+    color: var(--poke-blue);
+    border: 2px solid var(--poke-blue);
+}
+.btn-outline-blue:hover { background: var(--poke-blue); color: white; }
+
+.btn-outline-yellow {
+    background: white;
+    color: var(--poke-yellow);
+    border: 2px solid var(--poke-yellow);
+}
+.btn-outline-yellow:hover { background: var(--poke-yellow); color: white; }
+
+
+/* --- HEADER NET ET PROPRE --- */
+header {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-light);
+    padding: 16px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Gestion du Logo image et texte */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 40px; /* Ajuste la taille de ton logo ici */
+    width: auto;
+    border-radius: 10px; /* arrondir les bords du logo */
+    display: block;
+}
+
+.brand-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+.brand-name span { color: var(--poke-red); }
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+}
+
+/* nav items with small inline svg icons */
+.nav-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+.nav-item .nav-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+.nav-item .nav-icon img, .nav-item .nav-icon svg { width: 18px; height: 18px; color: var(--text-secondary); }
+.nav-item:hover { color: var(--poke-red); }
+.nav-item:hover .nav-icon img, .nav-item:hover .nav-icon svg { filter: hue-rotate(0deg); color: var(--poke-red); }
+
+#map-icon img, #map-icon svg { width: 22px; height: 22px; color: var(--text-secondary); }
+
+.header-actions { display: flex; align-items: center; gap: 20px;}
+.nav-link-secondary { color: var(--text-secondary); font-weight: 600; font-size: 0.9rem;}
+
+/* --- GRID PRINCIPALE --- */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1.2fr; /* Colonne gauche plus large */
+    gap: 40px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    align-items: start;
+}
+
+/* --- BLOCS HERO (USER/SELLER) --- */
+.hero-split {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.hero-card {
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    /* Ombre nette au lieu du flou */
+    box-shadow: var(--shadow-md); 
+    border: 1px solid var(--border-light);
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Effet de survol : légère remontée et ombre plus forte */
+.hero-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--poke-blue);
+}
+.card-seller:hover { border-color: var(--poke-yellow); }
+
+.card-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+}
+.badge-blue { background: #dbeafe; color: var(--poke-blue); }
+.badge-yellow { background: #fef3c7; color: var(--poke-yellow); }
+
+.hero-card h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+.card-user h2 { color: var(--text-primary); }
+.card-seller h2 { color: var(--text-primary); }
+
+.lead-text {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+/* Liste à puces avec icônes */
+.feature-list li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+.feature-list i { color: var(--poke-red); }
+.card-seller .feature-list i { color: var(--poke-yellow); }
+
+.card-action { margin-top: 32px; }
+.card-action .btn { width: 100%; padding: 16px; font-size: 1rem;}
+
+/* --- COLONNE DROITE : PROCESSUS IMAGÉ --- */
+.process-container {
+    background: var(--bg-surface);
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+}
+
+.process-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+
+.process-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Espace pour les flèches */
+    position: relative;
+}
+
+/* Trait vertical connecteur (optionnel, je l'ai retiré pour faire plus clean,
+   mais les flèches ci-dessous font le lien) */
+
+.process-step {
+    display: flex;
+    gap: 20px;
+    position: relative;
+    align-items: flex-start;
+}
+
+/* Flèche connecteur entre les étapes */
+.process-step:not(:last-child)::after {
+    content: "↓";
+    position: absolute;
+    left: 28px; /* Centré sous l'icône */
+    bottom: -35px;
+    font-size: 1.5rem;
+    color: var(--border-light);
+    font-weight: 300;
+}
+
+/* Style des icônes rondes */
+.step-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+.icon-red { background: #fee2e2; color: var(--poke-red); }
+.icon-blue { background: #dbeafe; color: var(--poke-blue); }
+.icon-yellow { background: #fef3c7; color: var(--poke-yellow); }
+
+.step-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+.step-content p { color: var(--text-secondary); font-size: 0.95rem; }
+
+
+/* --- SECTION BASSE (STATS & AVIS) --- */
+.bottom-section {
+    display: grid;
+    grid-template-columns: 1.8fr 1.2fr; /* Alignement avec le haut */
+    gap: 40px;
+    margin-bottom: 80px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.stat-box {
+    background: var(--bg-surface);
+    padding: 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--poke-blue);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.stat-label { font-size: 0.9rem; color: var(--text-secondary); font-weight: 600;}
+
+/* Carte d'avis */
+.review-card {
+    background: var(--bg-surface);
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+}
+
+.review-stars { color: #fbbf24; margin-bottom: 16px; font-size: 1.2rem; }
+.review-text { font-size: 1.05rem; font-style: italic; color: var(--text-primary); flex-grow: 1; }
+
+.review-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+.author-avatar {
+    width: 40px; height: 40px;
+    background: var(--poke-blue); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;
+}
+.author-info strong { display: block; font-weight: 700; }
+.author-info span { font-size: 0.85rem; color: var(--text-secondary); }
+
+
+/* --- FOOTER --- */
+footer {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-light);
+    padding: 32px 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-links a { margin-left: 24px; font-weight: 500; }
+
+/* --- RESPONSIVE RAPIDE --- */
+@media (max-width: 968px) {
+    .main-grid, .bottom-section {
+        grid-template-columns: 1fr; /* Tout sur une colonne sur tablette/mobile */
+        gap: 40px;
+    }
+    .nav-links, .nav-link-secondary { display: none; } /* On cache le menu pour simplifier la démo mobile */
+    .stats-grid { grid-template-columns: 1fr; }
+}
