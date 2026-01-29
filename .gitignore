@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+# VSCode
+.vscode/
+# Python envs
+venv/
+env/
+# Node
+node_modules/
+# logs
+*.log
+# temp
+*.tmp
+# user files
+*.png
+*.jpg
+*.jpeg
