@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PokeFinder - Espace vendeur</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="container nav-content">
+			<a href="../index.html" class="logo-container">
+				<img src="../assets/logo_temp.png" alt="Logo PokeFinder" class="logo-img">
+				<div class="brand-stack">
+					<span class="brand-name">Poke<span>Finder</span></span>
+					<span class="brand-tagline">mode vendeur</span>
+				</div>
+			</a>
+			<nav class="nav-links">
+				<a href="#" onclick="history.back(); return false;" class="nav-item" aria-label="Retour"><i class="fa-solid fa-arrow-left"></i></a>
+				<a href="../index.html" class="nav-item"><i class="fa-solid fa-house"></i></a>
+				<a href="dashboard.html" class="nav-item">Dashboard</a>
+				<a href="Barcode/barcode.html" class="nav-item">Scanner</a>
+				<a href="Profile/profile.html" class="nav-item">Profil</a>
+			</nav>
+			<div class="header-actions">
+				<a href="Auth/auth.html" class="btn btn-primary">Connexion</a>
+			</div>
+		</div>
+	</header>
+
+	<main class="page-shell">
+		<section class="page-hero">
+			<div class="container page-hero-shell">
+				<div class="page-hero-copy animate-up">
+					<span class="eyebrow">Mode revendeur</span>
+					<h1>Rendez le stock visible et actionnable.</h1>
+					<p>Scannez vos produits, suivez vos niveaux de stock en temps réel et augmentez votre visibilité auprès des collectionneurs de votre zone.</p>
+					<div class="hero-actions">
+						<a href="dashboard.html" class="btn btn-dark">Ouvrir le dashboard</a>
+						<a href="Barcode/barcode.html" class="btn btn-secondary">Scanner un produit</a>
+					</div>
+				</div>
+
+				<aside class="page-hero-side animate-up">
+					<div class="kpi-row">
+						<div class="kpi-copy">
+							<span class="kpi-label">Produits suivis</span>
+							<strong>1 248 references</strong>
+						</div>
+						<div class="kpi-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+					</div>
+					<div class="kpi-row">
+						<div class="kpi-copy">
+							<span class="kpi-label">Tension actuelle</span>
+							<strong>ETB 151 en forte demande</strong>
+						</div>
+						<div class="kpi-icon"><i class="fa-solid fa-chart-line"></i></div>
+					</div>
+					<div class="kpi-row">
+						<div class="kpi-copy">
+							<span class="kpi-label">Maj stock</span>
+							<strong>scan ou saisie manuelle</strong>
+						</div>
+						<div class="kpi-icon"><i class="fa-solid fa-barcode"></i></div>
+					</div>
+				</aside>
+			</div>
+		</section>
+
+		<section id="cockpit" class="section-block">
+			<div class="container dashboard-grid">
+				<article class="dashboard-card wide animate-up">
+					<h3>Le cockpit vendeur a besoin de trois choses</h3>
+					<div class="dashboard-row">
+						<div>
+							<strong>Operations</strong>
+							<p>entree, sortie, scan barcode, statut du stock et mises a jour rapides.</p>
+						</div>
+						
+					</div>
+					<div class="dashboard-row">
+						<div>
+							<strong>Visibilite</strong>
+							<p>profil boutique, horaires, canaux de vente et mise en avant locale.</p>
+						</div>
+						
+					</div>
+					<div class="dashboard-row">
+						<div>
+							<strong>Decision</strong>
+							<p>recommandations produits, signaux de tendance et trafic potentiel.</p>
+						</div>
+						
+					</div>
+				</article>
+
+				<article class="dashboard-card animate-up">
+					<h3>Action rapide</h3>
+					<p>En une action, le vendeur doit pouvoir corriger son stock ou enregistrer une vente.</p>
+					<div class="hero-actions">
+						<a href="Barcode/barcode.html" class="btn btn-primary">Lancer le scan</a>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section id="stock" class="section-block">
+			<div class="container dashboard-grid">
+				<article class="inventory-card wide animate-up">
+					<h3>Etat du stock visible</h3>
+
+					<div class="inventory-row">
+						<div class="inventory-item">
+							<div class="inventory-icon"><i class="fa-solid fa-box-open"></i></div>
+							<div>
+								<strong>ETB Pokemon 151</strong>
+								<span>rotation tres rapide</span>
+							</div>
+						</div>
+						<div>
+							<span class="inventory-value">6 unites</span>
+							<span class="inventory-label">niveau critique</span>
+						</div>
+					</div>
+					<div class="inventory-progress"><span data-target-width="24"></span></div>
+
+					<div class="inventory-row">
+						<div class="inventory-item">
+							<div class="inventory-icon"><i class="fa-solid fa-layer-group"></i></div>
+							<div>
+								<strong>Booster Prismatique</strong>
+								<span>stock confortable</span>
+							</div>
+						</div>
+						<div>
+							<span class="inventory-value">48 unites</span>
+							<span class="inventory-label">stable</span>
+						</div>
+					</div>
+					<div class="inventory-progress"><span data-target-width="72"></span></div>
+				</article>
+
+				<article class="inventory-card animate-up">
+					<h3>Options boutique</h3>
+					<ul class="feature-list">
+						<li><i class="fa-solid fa-circle-check"></i> infos magasin et abonnement</li>
+						<li><i class="fa-solid fa-circle-check"></i> recommandations produits</li>
+						<li><i class="fa-solid fa-circle-check"></i> reglages du profil vendeur</li>
+					</ul>
+				</article>
+			</div>
+		</section>
+
+		<section id="insights" class="section-block">
+			<div class="container activity-grid">
+				<article class="activity-card animate-up">
+					<h3>Insights en direct</h3>
+					<div class="feed-card">
+						<div class="feed-item">
+							<div class="feed-left">
+								<span class="feed-tag hot">Demande</span>
+								<div class="feed-copy">
+									<strong>Hausse sur ETB 151</strong>
+									<span>recherches +52% sur 24 h</span>
+								</div>
+							</div>
+							<span class="feed-time">maintenant</span>
+						</div>
+						<div class="feed-item">
+							<div class="feed-left">
+								<span class="feed-tag warm">Conseil</span>
+								<div class="feed-copy">
+									<strong>Remonter la fiche boutique</strong>
+									<span>photos et horaires manquants reduisent la conversion</span>
+								</div>
+							</div>
+							<span class="feed-time">analyse</span>
+						</div>
+					</div>
+				</article>
+
+				<article class="activity-card animate-up">
+					<h3>Ressources</h3>
+					<ul class="feature-list">
+						<li><i class="fa-solid fa-circle-question"></i> <a href="#">FAQ <span style="color:var(--text-soft)">(bientôt)</span></a></li>
+						<li><i class="fa-solid fa-headset"></i> <span style="color:var(--text-soft)">Support (bientôt)</span></li>
+						<li><i class="fa-solid fa-book"></i> <span style="color:var(--text-soft)">Documentation API (bientôt)</span></li>
+					</ul>
+				</article>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="container">
+			<div class="footer-content">
+				<div>
+					<div class="brand-name">Poke<span>Finder</span></div>
+
+				</div>
+				<div class="footer-links">
+                    <a href="../index.html">Accueil</a>
+                    <a href="../legal.html">Mentions légales</a>
+                </div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="../index.js" defer></script>
+	<!-- Auth state -->
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+	<script src="../src/config.js"></script>
+	<script src="../src/auth.js"></script>
+	<script>
+		(async () => {
+			const session = await getSession();
+			const actionsEl = document.querySelector('.header-actions');
+			if (session) {
+				const name = session.user.user_metadata?.display_name
+						  || session.user.email.split('@')[0];
+				const role = session.user.user_metadata?.role;
+				const profileHref = role === 'seller'
+					? 'Profile/profile.html'
+					: '../User/Profile/profile.html';
+				actionsEl.innerHTML = `
+					<span class="nav-link-secondary" style="font-weight:600">${name}</span>
+					<a href="${profileHref}" class="btn btn-secondary">Mon compte</a>
+					<button onclick="signOut().then(()=>location.reload())" class="btn btn-primary" style="cursor:pointer;border:none;">Déconnexion</button>
+				`;
+			}
+		})();
+	</script>
+</body>
+</html>

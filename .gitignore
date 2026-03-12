@@ -15,3 +15,8 @@ node_modules/
 *.png
 *.jpg
 *.jpeg
+
+# Variables d'environnement (Sécurité absolue)
+.env
+backend/.env
+*.env

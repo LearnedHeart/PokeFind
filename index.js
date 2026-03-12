@@ -1,88 +1,146 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Animate stats counters
-  const counters = document.querySelectorAll('.stat-number');
+  const counters = document.querySelectorAll('.stat-number[data-target], .kpi-val[data-target]');
+  const animatedBlocks = document.querySelectorAll('.animate-up, .fade-in');
+  const input = document.querySelector('#hero-search');
+  const pills = document.querySelectorAll('.search-pill[data-fill]');
+  const progressSpans = document.querySelectorAll('[data-target-width]');
 
-  function formatValue(val, target) {
-    // If target >= 1000, show as K+ rounded
+  // ── Hero search form handler ──────────────────────────────────
+  window.handleHeroSearch = function(e) {
+    e.preventDefault();
+    const q = (input ? input.value.trim() : '');
+    if (!q) { input && input.focus(); return false; }
+    window.location.href = 'User/Nav/search_result.html?q=' + encodeURIComponent(q);
+    return false;
+  };
+
+  const formatValue = (value, target) => {
     if (target >= 1000) {
-      const k = Math.round(val / 1000);
-      return `${k}K+`;
+      return `${Math.round(value / 1000)} ${Math.round(value / 1000) !== Math.round(target / 1000) ? '' : '+'}`.trim() || `${Math.round(value / 1000)}K+`;
     }
-    return Math.round(val).toString();
-  }
+    return Math.round(value).toString();
+  };
 
-  counters.forEach((el, idx) => {
-    const target = parseInt(el.dataset.target || el.textContent.replace(/[^0-9]/g, ''), 10) || 0;
-    el.textContent = '0';
-    // We'll animate when element becomes visible
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // duration and start time
-          const duration = 1400 + idx * 200; // stagger
-          const start = performance.now();
-          function step(now) {
-            const progress = Math.min((now - start) / duration, 1);
-            const value = Math.floor(progress * target);
-            el.textContent = formatValue(value, target);
-            if (progress < 1) {
-              requestAnimationFrame(step);
-            } else {
-              // final value
-              el.textContent = formatValue(target, target);
-              // pop animation
-              el.classList.add('pop');
-              setTimeout(() => el.classList.remove('pop'), 600);
-            }
-          }
-          requestAnimationFrame(step);
-          obs.unobserve(el);
-        }
-      });
-    }, { threshold: 0.2 });
-    io.observe(el);
-  });
-
-  // Animate entrance for .animate-up elements with small stagger
-  const animEls = Array.from(document.querySelectorAll('.animate-up'));
-  const animObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        const el = entry.target;
-        el.classList.add('visible');
-        obs.unobserve(el);
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.15 });
 
-  animEls.forEach((el, i) => {
-    // small stagger when visible: delay via setTimeout after visible class
-    animObserver.observe(el);
+  animatedBlocks.forEach((block) => revealObserver.observe(block));
+
+  counters.forEach((counter, index) => {
+    const target = Number(counter.dataset.target || 0);
+    counter.textContent = '0';
+
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        const startedAt = performance.now();
+        const duration = 1000 + index * 100;
+
+        const tick = (now) => {
+          const progress = Math.min((now - startedAt) / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          const value = target * ease;
+          counter.textContent = Math.round(value).toString();
+
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+            return;
+          }
+
+          counter.textContent = target.toString();
+          counter.classList.add('pop');
+          window.setTimeout(() => counter.classList.remove('pop'), 260);
+        };
+
+        requestAnimationFrame(tick);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.35 });
+
+    counterObserver.observe(counter);
   });
 
-});
+  // Animate progress bars
+  progressSpans.forEach((span) => {
+    const targetW = Number(span.dataset.targetWidth || 0);
+    span.style.width = '0%';
+    span.style.transition = 'width 1.1s cubic-bezier(0.4, 0, 0.2, 1)';
 
-// Staggered page-load animations (extra polish)
-document.addEventListener('DOMContentLoaded', () => {
-  const sequence = [
-    { sel: '.logo-container', cls: 'animate-left' },
-    { sel: '.nav-links .nav-item', cls: 'animate-up' },
-    { sel: '.header-actions', cls: 'animate-right' },
-    { sel: '.hero-card', cls: 'animate-up' },
-    { sel: '.process-step', cls: 'animate-up' },
-    { sel: '.stat-box', cls: 'animate-up' },
-    { sel: '.review-card', cls: 'fade-in' },
-    { sel: 'footer', cls: 'fade-in' }
-  ];
+    const barObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        // Small delay so the bar is visible before animating
+        setTimeout(() => { span.style.width = targetW + '%'; }, 120);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.5 });
 
-  let baseDelay = 120;
-  sequence.forEach(group => {
-    const nodes = Array.from(document.querySelectorAll(group.sel));
-    nodes.forEach((node, i) => {
-      // ensure the helper class exists so visible transitions apply
-      node.classList.add(group.cls);
-      setTimeout(() => node.classList.add('visible'), baseDelay + i * 80);
+    barObserver.observe(span);
+  });
+
+  pills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      if (!input) {
+        return;
+      }
+
+      input.value = pill.dataset.fill || '';
+      input.focus();
     });
-    baseDelay += 120;
   });
+
+  // Animated placeholder typewriter for hero search
+  if (input) {
+    const hints = [
+      'ETB Pokémon 151',
+      'Display Évolution Céleste',
+      'Booster Prismatique',
+      'Coffret Dresseur Élite',
+      'Display Shiny Treasure ex',
+      'Tripack japonais',
+    ];
+
+    let hintIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    const type = () => {
+      if (document.activeElement === input) {
+        setTimeout(type, 400);
+        return;
+      }
+      const current = hints[hintIndex];
+
+      if (!isDeleting) {
+        input.placeholder = current.slice(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === current.length) {
+          isDeleting = true;
+          setTimeout(type, 2200);
+          return;
+        }
+        setTimeout(type, 80);
+      } else {
+        input.placeholder = current.slice(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          hintIndex = (hintIndex + 1) % hints.length;
+        }
+        setTimeout(type, 40);
+      }
+    };
+
+    input.placeholder = '';
+    setTimeout(type, 1200);
+  }
 });

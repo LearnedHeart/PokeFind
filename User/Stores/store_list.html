@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeFinder - Boutiques</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .store-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+        .store-map { border-radius: var(--radius-lg); min-height: 500px; background: linear-gradient(rgba(24,32,50,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(24,32,50,0.04) 1px, transparent 1px), linear-gradient(135deg, rgba(63,124,255,0.08), rgba(242,182,61,0.06)); background-size: 40px 40px, 40px 40px, auto; border: 1px solid var(--border); position: relative; display: flex; align-items: center; justify-content: center; }
+        .store-map .map-placeholder { text-align: center; color: var(--text-soft); }
+        .store-map .map-placeholder i { font-size: 3rem; opacity: 0.3; display: block; margin-bottom: 10px; }
+        .store-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .store-filters .filter-btn { padding: 10px 16px; border-radius: var(--radius-pill); border: 1px solid var(--border); background: #fff; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; color: var(--text-soft); }
+        .store-filters .filter-btn:hover, .store-filters .filter-btn.active { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
+        .store-list-col { display: flex; flex-direction: column; gap: 14px; max-height: 600px; overflow-y: auto; }
+        .store-item { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); transition: transform 0.15s, box-shadow 0.15s; text-decoration: none; color: inherit; }
+        .store-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .store-item-icon { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--accent-blue), #67b0ff); display: grid; place-items: center; color: #fff; font-size: 1.2rem; flex-shrink: 0; }
+        .store-item-icon.online { background: linear-gradient(135deg, var(--accent-green), #4ade80); }
+        .store-item-body { flex: 1; min-width: 0; }
+        .store-item-body strong { display: block; font-size: 1rem; }
+        .store-item-body .store-address { font-size: 0.82rem; color: var(--text-soft); margin-top: 2px; }
+        .store-item-right { text-align: right; flex-shrink: 0; }
+        .store-item-right .dist { font-weight: 700; font-size: 0.95rem; }
+        .store-item-right .hours { font-size: 0.78rem; color: var(--accent-green); font-weight: 600; }
+        .store-item-right .hours.closed { color: var(--accent-red); }
+        @media (max-width: 768px) { .store-layout { grid-template-columns: 1fr; } .store-map { min-height: 280px; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-content">
+            <a href="../../index.html" class="logo-container">
+                <img src="../../assets/logo_temp.png" alt="Logo PokeFinder" class="logo-img">
+                <div class="brand-stack">
+                    <span class="brand-name">Poke<span>Finder</span></span>
+                    <span class="brand-tagline">boutiques</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="#" onclick="history.back(); return false;" class="nav-item" aria-label="Retour"><i class="fa-solid fa-arrow-left"></i></a>
+				<a href="../../index.html" class="nav-item"><i class="fa-solid fa-house"></i></a>
+                <a href="../Products/product_list.html" class="nav-item">Produits</a>
+                <a href="../user_index.html" class="nav-item">Espace Dresseur</a>
+            </nav>
+            <div class="header-actions">
+                <a href="../Auth/auth.html" class="nav-link-secondary">Connexion</a>
+                <a href="../Products/product_list.html" class="btn btn-primary">Voir les produits</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="hero-section" style="padding-bottom: 0;">
+            <div class="container">
+                <div class="animate-up" style="text-align: center; max-width: 600px; margin: 0 auto;">
+                    <h1 style="font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.05em;">Boutiques <span class="text-gradient">autour de vous</span></h1>
+                    <p class="lead-text" style="margin: 10px auto 0;">Physiques ou en ligne, trouvez les magasins qui ont ce que vous cherchez.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="container">
+                <div class="store-filters">
+                    <button class="filter-btn active">Toutes</button>
+                    <button class="filter-btn">Physiques</button>
+                    <button class="filter-btn">En ligne</button>
+                    <button class="filter-btn">< 5 km</button>
+                    <button class="filter-btn">Ouvertes maintenant</button>
+                </div>
+
+                <div class="store-layout">
+                    <div class="store-map animate-up">
+                        <div class="map-placeholder">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <p>Carte interactive (API Maps à brancher)</p>
+                        </div>
+                    </div>
+
+                    <div class="store-list-col">
+                        <a href="store.html" class="store-item animate-up">
+                            <div class="store-item-icon"><i class="fa-solid fa-store"></i></div>
+                            <div class="store-item-body">
+                                <strong>Johto Cards</strong>
+                                <div class="store-address">12 rue du Commerce, Paris 15e</div>
+                            </div>
+                            <div class="store-item-right">
+                                <div class="dist">2.3 km</div>
+                                <div class="hours">Ouvert</div>
+                            </div>
+                        </a>
+                        <a href="store.html" class="store-item animate-up">
+                            <div class="store-item-icon"><i class="fa-solid fa-store"></i></div>
+                            <div class="store-item-body">
+                                <strong>PokéShop Lyon</strong>
+                                <div class="store-address">45 av. Jean Jaurès, Lyon 7e</div>
+                            </div>
+                            <div class="store-item-right">
+                                <div class="dist">5.1 km</div>
+                                <div class="hours">Ouvert</div>
+                            </div>
+                        </a>
+                        <a href="store.html" class="store-item animate-up">
+                            <div class="store-item-icon"><i class="fa-solid fa-store"></i></div>
+                            <div class="store-item-body">
+                                <strong>Lugia TCG</strong>
+                                <div class="store-address">8 place Bellecour, Lyon 2e</div>
+                            </div>
+                            <div class="store-item-right">
+                                <div class="dist">7.8 km</div>
+                                <div class="hours closed">Fermé</div>
+                            </div>
+                        </a>
+                        <a href="store.html" class="store-item animate-up">
+                            <div class="store-item-icon online"><i class="fa-solid fa-globe"></i></div>
+                            <div class="store-item-body">
+                                <strong>TCG Express</strong>
+                                <div class="store-address">En ligne - Livraison 48h</div>
+                            </div>
+                            <div class="store-item-right">
+                                <div class="dist">Web</div>
+                                <div class="hours">24/7</div>
+                            </div>
+                        </a>
+                        <a href="store.html" class="store-item animate-up">
+                            <div class="store-item-icon"><i class="fa-solid fa-store"></i></div>
+                            <div class="store-item-body">
+                                <strong>Carte & Co Marseille</strong>
+                                <div class="store-address">23 cours Julien, Marseille 6e</div>
+                            </div>
+                            <div class="store-item-right">
+                                <div class="dist">12 km</div>
+                                <div class="hours">Ouvert</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div><div class="brand-name">Poke<span>Finder</span></div></div>
+                <div class="footer-links">
+                    <a href="../../index.html">Accueil</a>
+                    <a href="../../legal.html">Mentions légales</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../index.js" defer></script>
+    <script>
+        document.querySelectorAll('.store-filters .filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.store-filters .filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const label = btn.textContent.trim();
+                document.querySelectorAll('.store-item').forEach(item => {
+                    const isOnline = item.querySelector('.store-item-icon.online') !== null;
+                    const distText = item.querySelector('.dist')?.textContent.trim() || '';
+                    const hoursText = item.querySelector('.hours')?.textContent.trim() || '';
+                    let show = true;
+                    if (label === 'Physiques') show = !isOnline;
+                    else if (label === 'En ligne') show = isOnline;
+                    else if (label === '< 5 km') {
+                        const km = parseFloat(distText);
+                        show = !isNaN(km) && km < 5;
+                    } else if (label === 'Ouvertes maintenant') {
+                        show = hoursText === 'Ouvert' || hoursText === '24/7';
+                    }
+                    item.style.display = show ? '' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeFinder - Catalogue Produits</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .catalog-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 28px; }
+        .catalog-search { flex: 1; min-width: 240px; display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 14px; border: 1px solid var(--border); background: #fff; }
+        .catalog-search input { flex: 1; border: none; outline: none; background: transparent; font-size: 0.95rem; }
+        .filter-group { display: flex; flex-wrap: wrap; gap: 10px; }
+        .filter-btn { padding: 10px 16px; border-radius: var(--radius-pill); border: 1px solid var(--border); background: #fff; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; color: var(--text-soft); }
+        .filter-btn:hover, .filter-btn.active { background: var(--surface-dark); color: #fff; border-color: var(--surface-dark); box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+        .sort-select { appearance: none; padding: 10px 36px 10px 18px; border-radius: var(--radius-pill); border: 1px solid var(--border); background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%2364748b' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z'/%3E%3C/svg%3E") no-repeat right 14px center; background-size: 10px; font-weight: 700; font-size: 0.85rem; color: var(--surface-dark); cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm); }
+        .sort-select:hover { border-color: var(--surface-dark); transform: translateY(-1px); }
+        .sort-select:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .product-card { border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; display: block; }
+        .product-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .product-thumb { height: 180px; background: linear-gradient(135deg, rgba(63,124,255,0.08), rgba(220,38,38,0.06)); display: grid; place-items: center; }
+        .product-thumb i { font-size: 3rem; color: var(--text-soft); opacity: 0.3; }
+        .product-info { padding: 20px; }
+        .product-info h3 { font-size: 1.05rem; letter-spacing: -0.02em; margin-bottom: 6px; }
+        .product-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .product-serie { font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: var(--radius-pill); background: rgba(63,124,255,0.1); color: var(--accent-blue); }
+        .product-type { font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: var(--radius-pill); background: rgba(220,38,38,0.08); color: var(--accent-red); }
+        .product-price { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; }
+        .product-stock { font-size: 0.82rem; color: var(--accent-green); font-weight: 600; margin-top: 6px; }
+        .product-stock.low { color: var(--accent-red); }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-content">
+            <a href="../../index.html" class="logo-container">
+                <img src="../../assets/logo_temp.png" alt="Logo PokeFinder" class="logo-img">
+                <div class="brand-stack">
+                    <span class="brand-name">Poke<span>Finder</span></span>
+                    <span class="brand-tagline">catalogue produits</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="#" onclick="history.back(); return false;" class="nav-item" aria-label="Retour"><i class="fa-solid fa-arrow-left"></i></a>
+				<a href="../../index.html" class="nav-item"><i class="fa-solid fa-house"></i></a>
+                <a href="../Stores/store_list.html" class="nav-item">Boutiques</a>
+                <a href="../user_index.html" class="nav-item">Espace Dresseur</a>
+            </nav>
+            <div class="header-actions">
+                <a href="../Auth/auth.html" class="nav-link-secondary">Connexion</a>
+                <a href="../Stores/store_list.html" class="btn btn-primary">Voir les boutiques</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="hero-section" style="padding-bottom: 0;">
+            <div class="container">
+                <div class="animate-up" style="text-align: center; max-width: 600px; margin: 0 auto;">
+                    <h1 style="font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.05em;">Tous les <span class="text-gradient">produits</span></h1>
+                    <p class="lead-text" style="margin: 10px auto 0;">Trouvez le produit que vous cherchez, filtrez par type ou série, et voyez directement qui l'a en stock.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="container">
+                <div class="catalog-toolbar">
+                    <div class="catalog-search">
+                        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-soft);"></i>
+                        <input type="text" placeholder="Chercher un produit...">
+                    </div>
+                    <div class="filter-group">
+                        <button class="filter-btn active">Tous</button>
+                        <button class="filter-btn">ETB</button>
+                        <button class="filter-btn">Display</button>
+                        <button class="filter-btn">Booster</button>
+                        <button class="filter-btn">Coffret</button>
+                    </div>
+                    <select class="sort-select">
+                        <option>Tri : Tendance</option>
+                        <option>Tri : Prix croissant</option>
+                        <option>Tri : Prix décroissant</option>
+                        <option>Tri : Nouveauté</option>
+                        <option>Tri : Rareté</option>
+                    </select>
+                </div>
+
+                <div class="product-grid">
+                    <a href="product.html" class="product-card animate-up">
+                        <div class="product-thumb"><i class="fa-solid fa-box-open"></i></div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="product-serie">151</span>
+                                <span class="product-type">ETB</span>
+                            </div>
+                            <h3>ETB Pokémon 151</h3>
+                            <span class="product-price">54,99 €</span>
+                            <p class="product-stock low"><i class="fa-solid fa-circle" style="font-size: 0.5rem; vertical-align: middle;"></i> Stock limité</p>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product-card animate-up">
+                        <div class="product-thumb"><i class="fa-solid fa-box-open"></i></div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="product-serie">Évolution Céleste</span>
+                                <span class="product-type">Display</span>
+                            </div>
+                            <h3>Display Évolution Céleste</h3>
+                            <span class="product-price">159,99 €</span>
+                            <p class="product-stock"><i class="fa-solid fa-circle" style="font-size: 0.5rem; vertical-align: middle;"></i> En stock (12 boutiques)</p>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product-card animate-up">
+                        <div class="product-thumb"><i class="fa-solid fa-box-open"></i></div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="product-serie">Prismatique</span>
+                                <span class="product-type">Booster</span>
+                            </div>
+                            <h3>Booster Prismatique</h3>
+                            <span class="product-price">5,50 €</span>
+                            <p class="product-stock"><i class="fa-solid fa-circle" style="font-size: 0.5rem; vertical-align: middle;"></i> Disponible partout</p>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product-card animate-up">
+                        <div class="product-thumb"><i class="fa-solid fa-box-open"></i></div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="product-serie">151</span>
+                                <span class="product-type">Coffret</span>
+                            </div>
+                            <h3>Coffret Dresseur d'Élite UPC</h3>
+                            <span class="product-price">119,99 €</span>
+                            <p class="product-stock low"><i class="fa-solid fa-circle" style="font-size: 0.5rem; vertical-align: middle;"></i> Quasi épuisé</p>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product-card animate-up">
+                        <div class="product-thumb"><i class="fa-solid fa-box-open"></i></div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="product-serie">Japon</span>
+                                <span class="product-type">Display</span>
+                            </div>
+                            <h3>Display Japonais Shiny Treasure</h3>
+                            <span class="product-price">89,99 €</span>
+                            <p class="product-stock"><i class="fa-solid fa-circle" style="font-size: 0.5rem; vertical-align: middle;"></i> En stock (5 boutiques)</p>
+                        </div>
+                    </a>
+                    <a href="product.html" class="product-card animate-up">
+                        <div class="product-thumb"><i class="fa-solid fa-box-open"></i></div>
+                        <div class="product-info">
+                            <div class="product-meta">
+                                <span class="product-serie">Écarlate & Violet</span>
+                                <span class="product-type">ETB</span>
+                            </div>
+                            <h3>ETB Écarlate & Violet</h3>
+                            <span class="product-price">49,99 €</span>
+                            <p class="product-stock"><i class="fa-solid fa-circle" style="font-size: 0.5rem; vertical-align: middle;"></i> Disponible</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="brand-name">Poke<span>Finder</span></div>
+                </div>
+                <div class="footer-links">
+                    <a href="../../index.html">Accueil</a>
+                    <a href="../../legal.html">Mentions légales</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../index.js" defer></script>
+    <script>
+        // ── Filter buttons toggle active state ────────────────────
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterProducts();
+            });
+        });
+
+        // ── Search bar filters products ───────────────────────────
+        const catalogSearch = document.querySelector('.catalog-search input');
+        if (catalogSearch) {
+            catalogSearch.addEventListener('input', () => filterProducts());
+        }
+
+        function filterProducts() {
+            const activeFilter = document.querySelector('.filter-btn.active');
+            const filterText = activeFilter ? activeFilter.textContent.trim() : 'Tous';
+            const searchTerm = (catalogSearch ? catalogSearch.value.trim().toLowerCase() : '');
+            
+            document.querySelectorAll('.product-card').forEach(card => {
+                const typeEl = card.querySelector('.product-type');
+                const titleEl = card.querySelector('.product-info h3');
+                const type = typeEl ? typeEl.textContent.trim() : '';
+                const title = titleEl ? titleEl.textContent.trim().toLowerCase() : '';
+                
+                const matchFilter = (filterText === 'Tous' || type === filterText);
+                const matchSearch = (!searchTerm || title.includes(searchTerm));
+                
+                card.style.display = (matchFilter && matchSearch) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>

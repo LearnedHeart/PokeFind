@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeFinder - Dashboard Vendeur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .dash-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; }
+        .dash-top h1 { font-size: 1.6rem; letter-spacing: -0.04em; }
+        .dash-top .shop-tag { font-size: 0.85rem; color: var(--text-soft); }
+        .dash-actions { display: flex; gap: 10px; }
+        .kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+        .kpi-card { padding: 22px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+        .kpi-card .kpi-val { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.04em; }
+        .kpi-card .kpi-lbl { font-size: 0.82rem; color: var(--text-soft); margin-top: 4px; }
+        .kpi-card .kpi-trend { font-size: 0.78rem; font-weight: 700; margin-top: 6px; }
+        .kpi-card .kpi-trend.up { color: var(--accent-green); }
+        .kpi-card .kpi-trend.down { color: var(--accent-red); }
+        .dash-grid { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 24px; }
+        .dash-panel { border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); padding: 24px; }
+        .dash-panel h3 { font-size: 1.1rem; letter-spacing: -0.02em; margin-bottom: 18px; }
+        .stock-table { width: 100%; border-collapse: collapse; }
+        .stock-table th { text-align: left; font-size: 0.78rem; font-weight: 700; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+        .stock-table td { padding: 14px 12px; border-bottom: 1px solid rgba(0,0,0,0.04); font-size: 0.92rem; }
+        .stock-table .stock-qty { font-weight: 800; }
+        .stock-table .stock-qty.low { color: var(--accent-red); }
+        .stock-table .stock-qty.ok { color: var(--accent-green); }
+        .stock-bar { height: 6px; border-radius: 3px; background: rgba(0,0,0,0.06); width: 80px; display: inline-block; position: relative; }
+        .stock-bar span { position: absolute; top: 0; left: 0; height: 100%; border-radius: 3px; }
+        .stock-bar .fill-ok { background: var(--accent-green); }
+        .stock-bar .fill-low { background: var(--accent-red); }
+        .stock-bar .fill-mid { background: var(--accent-yellow); }
+        .trend-list { display: flex; flex-direction: column; gap: 14px; }
+        .trend-item { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 14px; background: rgba(255,255,255,0.6); border: 1px solid var(--border); }
+        .trend-item .trend-rank { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, var(--accent-red), #f87171); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 0.85rem; flex-shrink: 0; }
+        .trend-item .trend-body strong { display: block; font-size: 0.92rem; }
+        .trend-item .trend-body span { font-size: 0.78rem; color: var(--text-soft); }
+        .reco-card { margin-top: 20px; padding: 20px; border-radius: 18px; background: rgba(63,124,255,0.06); border: 1px solid rgba(63,124,255,0.15); }
+        .reco-card h4 { font-size: 0.95rem; margin-bottom: 8px; color: var(--accent-blue); }
+        .reco-card p { font-size: 0.88rem; color: var(--text-soft); }
+        @media (max-width: 900px) { .kpi-strip { grid-template-columns: 1fr 1fr; } .dash-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { .kpi-strip { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-content">
+            <a href="../index.html" class="logo-container">
+                <img src="../assets/logo_temp.png" alt="Logo PokeFinder" class="logo-img">
+                <div class="brand-stack">
+                    <span class="brand-name">Poke<span>Finder</span></span>
+                    <span class="brand-tagline">dashboard vendeur</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="#" onclick="history.back(); return false;" class="nav-item" aria-label="Retour"><i class="fa-solid fa-arrow-left"></i></a>
+				<a href="../index.html" class="nav-item"><i class="fa-solid fa-house"></i></a>
+                <a href="Barcode/barcode.html" class="nav-item">Scanner</a>
+                <a href="Profile/profile.html" class="nav-item">Profil</a>
+                <a href="seller_index.html" class="nav-item"><i class="fa-solid fa-store"></i></a>
+            </nav>
+            <div class="header-actions">
+                <a href="Barcode/barcode.html" class="btn btn-primary"><i class="fa-solid fa-barcode"></i> Scanner</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="section-block">
+            <div class="container">
+                <div class="dash-top">
+                    <div>
+                        <h1>Dashboard</h1>
+                        <span class="shop-tag"><i class="fa-solid fa-store"></i> Johto Cards Paris</span>
+                    </div>
+                    <div class="dash-actions">
+                        <a href="Barcode/barcode.html" class="btn btn-dark"><i class="fa-solid fa-plus"></i> Entrée stock</a>
+                        <a href="Profile/profile.html" class="btn btn-secondary"><i class="fa-solid fa-gear"></i> Réglages</a>
+                    </div>
+                </div>
+
+                <div class="kpi-strip">
+                    <div class="kpi-card animate-up">
+                        <div class="kpi-val" data-target="142">0</div>
+                        <div class="kpi-lbl">Références en stock</div>
+                        <div class="kpi-trend up"><i class="fa-solid fa-arrow-up"></i> +8 cette semaine</div>
+                    </div>
+                    <div class="kpi-card animate-up">
+                        <div class="kpi-val" data-target="37">0</div>
+                        <div class="kpi-lbl">Ventes ce mois</div>
+                        <div class="kpi-trend up"><i class="fa-solid fa-arrow-up"></i> +12% vs mois dernier</div>
+                    </div>
+                    <div class="kpi-card animate-up">
+                        <div class="kpi-val" data-target="284">0</div>
+                        <div class="kpi-lbl">Vues du profil boutique</div>
+                        <div class="kpi-trend up"><i class="fa-solid fa-arrow-up"></i> +23%</div>
+                    </div>
+                    <div class="kpi-card animate-up">
+                        <div class="kpi-val" data-target="6">0</div>
+                        <div class="kpi-lbl">Produits en stock critique</div>
+                        <div class="kpi-trend down"><i class="fa-solid fa-triangle-exclamation"></i> À réapprovisionner</div>
+                    </div>
+                </div>
+
+                <div class="dash-grid">
+                    <div class="dash-panel animate-up">
+                        <h3>État du stock</h3>
+                        <table class="stock-table">
+                            <thead>
+                                <tr>
+                                    <th>Produit</th>
+                                    <th>Série</th>
+                                    <th>Quantité</th>
+                                    <th>Niveau</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>ETB Pokémon 151</strong></td>
+                                    <td>151</td>
+                                    <td class="stock-qty low">3</td>
+                                    <td><div class="stock-bar"><span class="fill-low" data-target-width="15"></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Display Évolution Céleste</strong></td>
+                                    <td>Évolution Céleste</td>
+                                    <td class="stock-qty ok">24</td>
+                                    <td><div class="stock-bar"><span class="fill-ok" data-target-width="65"></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Booster Prismatique</strong></td>
+                                    <td>Prismatique</td>
+                                    <td class="stock-qty ok">46</td>
+                                    <td><div class="stock-bar"><span class="fill-ok" data-target-width="85"></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Coffret Dresseur UPC</strong></td>
+                                    <td>151</td>
+                                    <td class="stock-qty low">1</td>
+                                    <td><div class="stock-bar"><span class="fill-low" data-target-width="5"></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ETB Écarlate & Violet</strong></td>
+                                    <td>Écarlate & Violet</td>
+                                    <td class="stock-qty ok">15</td>
+                                    <td><div class="stock-bar"><span class="fill-mid" data-target-width="45"></span></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                        <div class="dash-panel animate-up">
+                            <h3>Tendances recherches</h3>
+                            <div class="trend-list">
+                                <div class="trend-item">
+                                    <div class="trend-rank">1</div>
+                                    <div class="trend-body">
+                                        <strong>ETB Pokémon 151</strong>
+                                        <span>+52% de recherches en 24h</span>
+                                    </div>
+                                </div>
+                                <div class="trend-item">
+                                    <div class="trend-rank">2</div>
+                                    <div class="trend-body">
+                                        <strong>Display Shiny Treasure</strong>
+                                        <span>+31% de recherches en 24h</span>
+                                    </div>
+                                </div>
+                                <div class="trend-item">
+                                    <div class="trend-rank">3</div>
+                                    <div class="trend-body">
+                                        <strong>Booster Prismatique</strong>
+                                        <span>Demande stable</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dash-panel animate-up">
+                            <div class="reco-card">
+                                <h4><i class="fa-solid fa-lightbulb"></i> Recommandation</h4>
+                                <p>L'ETB 151 est en forte demande dans votre zone. Pensez à réapprovisionner avant la fin de semaine pour capter le trafic.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div><div class="brand-name">Poke<span>Finder</span></div></div>
+                <div class="footer-links">
+                    <a href="../index.html">Accueil</a>
+                    <a href="../legal.html">Mentions légales</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../index.js" defer></script>
+</body>
+</html>

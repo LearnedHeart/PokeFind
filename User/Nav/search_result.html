@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeFinder - Résultats de recherche</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .results-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+        .results-header h1 { font-size: 1.5rem; letter-spacing: -0.03em; }
+        .results-header .result-count { color: var(--text-soft); font-size: 0.9rem; }
+        .results-search { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 14px; border: 1px solid var(--border); background: #fff; max-width: 500px; width: 100%; margin-bottom: 24px; }
+        .results-search input { flex: 1; border: none; outline: none; background: transparent; font-size: 0.95rem; }
+        .results-tabs { display: flex; gap: 0; margin-bottom: 24px; border-radius: var(--radius-pill); background: rgba(24,32,50,0.05); padding: 4px; width: fit-content; }
+        .results-tab { padding: 10px 20px; border-radius: var(--radius-pill); font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; color: var(--text-soft); border: none; background: none; }
+        .results-tab.active { background: #fff; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .results-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+        .results-list { display: flex; flex-direction: column; gap: 14px; }
+        .result-card { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-decoration: none; color: inherit; transition: transform 0.15s; }
+        .result-card:hover { transform: translateY(-2px); }
+        .result-icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; color: #fff; font-size: 1.1rem; flex-shrink: 0; }
+        .result-icon.product { background: linear-gradient(135deg, var(--accent-red), #f87171); }
+        .result-icon.store { background: linear-gradient(135deg, var(--accent-blue), #67b0ff); }
+        .result-body { flex: 1; }
+        .result-body strong { display: block; font-size: 0.95rem; }
+        .result-body span { font-size: 0.82rem; color: var(--text-soft); }
+        .result-right { text-align: right; flex-shrink: 0; }
+        .result-right .r-price { font-weight: 800; }
+        .result-right .r-info { font-size: 0.78rem; color: var(--text-soft); }
+        .results-map { border-radius: var(--radius-lg); min-height: 460px; background: linear-gradient(rgba(24,32,50,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(24,32,50,0.04) 1px, transparent 1px), linear-gradient(135deg, rgba(63,124,255,0.08), rgba(242,182,61,0.06)); background-size: 40px 40px, 40px 40px, auto; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; position: sticky; top: 100px; }
+        .results-map .map-placeholder { text-align: center; color: var(--text-soft); }
+        .results-map .map-placeholder i { font-size: 3rem; opacity: 0.3; display: block; margin-bottom: 10px; }
+        @media (max-width: 768px) { .results-layout { grid-template-columns: 1fr; } .results-map { min-height: 250px; position: static; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-content">
+            <a href="../../index.html" class="logo-container">
+                <img src="../../assets/logo_temp.png" alt="Logo PokeFinder" class="logo-img">
+                <div class="brand-stack">
+                    <span class="brand-name">Poke<span>Finder</span></span>
+                    <span class="brand-tagline">résultats</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="#" onclick="history.back(); return false;" class="nav-item" aria-label="Retour"><i class="fa-solid fa-arrow-left"></i></a>
+				<a href="../../index.html" class="nav-item"><i class="fa-solid fa-house"></i></a>
+                <a href="../Products/product_list.html" class="nav-item">Produits</a>
+                <a href="../Stores/store_list.html" class="nav-item">Boutiques</a>
+            </nav>
+            <div class="header-actions">
+                <a href="../Auth/auth.html" class="nav-link-secondary">Connexion</a>
+                <a href="../Products/product_list.html" class="btn btn-primary">Nouveau catalogue</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="section-block">
+            <div class="container">
+                <div class="results-search">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-soft);"></i>
+                    <input type="text" placeholder="Chercher un produit ou une boutique...">
+                </div>
+
+                <div class="results-header">
+                    <div>
+                        <h1>Résultats de recherche</h1>
+                        <span class="result-count">3 produits, 4 boutiques</span>
+                    </div>
+                </div>
+
+                <div class="results-tabs">
+                    <button class="results-tab active">Tout</button>
+                    <button class="results-tab">Produits</button>
+                    <button class="results-tab">Boutiques</button>
+                </div>
+
+                <div class="results-layout">
+                    <div class="results-list">
+                        <a href="../Products/product.html" class="result-card animate-up">
+                            <div class="result-icon product"><i class="fa-solid fa-box-open"></i></div>
+                            <div class="result-body">
+                                <strong>ETB Pokémon 151</strong>
+                                <span>Série 151 - ETB</span>
+                            </div>
+                            <div class="result-right">
+                                <div class="r-price">54,99 €</div>
+                                <div class="r-info">8 vendeurs</div>
+                            </div>
+                        </a>
+                        <a href="../Products/product.html" class="result-card animate-up">
+                            <div class="result-icon product"><i class="fa-solid fa-box-open"></i></div>
+                            <div class="result-body">
+                                <strong>Coffret Dresseur UPC 151</strong>
+                                <span>Série 151 - Coffret</span>
+                            </div>
+                            <div class="result-right">
+                                <div class="r-price">119,99 €</div>
+                                <div class="r-info">2 vendeurs</div>
+                            </div>
+                        </a>
+                        <a href="../Stores/store.html" class="result-card animate-up">
+                            <div class="result-icon store"><i class="fa-solid fa-store"></i></div>
+                            <div class="result-body">
+                                <strong>Johto Cards Paris</strong>
+                                <span>12 rue du Commerce - 2.3 km</span>
+                            </div>
+                            <div class="result-right">
+                                <div class="r-price">3 en stock</div>
+                                <div class="r-info">Ouvert</div>
+                            </div>
+                        </a>
+                        <a href="../Stores/store.html" class="result-card animate-up">
+                            <div class="result-icon store"><i class="fa-solid fa-store"></i></div>
+                            <div class="result-body">
+                                <strong>PokéShop Lyon</strong>
+                                <span>45 av. Jean Jaurès - 5.1 km</span>
+                            </div>
+                            <div class="result-right">
+                                <div class="r-price">12 en stock</div>
+                                <div class="r-info">Ouvert</div>
+                            </div>
+                        </a>
+                        <a href="../Stores/store.html" class="result-card animate-up">
+                            <div class="result-icon store"><i class="fa-solid fa-store"></i></div>
+                            <div class="result-body">
+                                <strong>TCG Express</strong>
+                                <span>En ligne - Livraison 48h</span>
+                            </div>
+                            <div class="result-right">
+                                <div class="r-price">En stock</div>
+                                <div class="r-info">24/7</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="results-map animate-up">
+                        <div class="map-placeholder">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <p>Carte des résultats (API Maps)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div><div class="brand-name">Poke<span>Finder</span></div></div>
+                <div class="footer-links">
+                    <a href="../../index.html">Accueil</a>
+                    <a href="../../legal.html">Mentions légales</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../index.js" defer></script>
+    <script>
+        // T86 — Pre-fill from URL ?q=
+        const params = new URLSearchParams(window.location.search);
+        const q = params.get('q') || '';
+        if (q) {
+            const input = document.querySelector('.results-search input');
+            input.value = q;
+            document.querySelector('.results-header h1').textContent = 'Résultats pour "' + q + '"';
+        }
+
+        // T87 — Tab toggles
+        document.querySelectorAll('.results-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.results-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const label = tab.textContent.trim();
+                document.querySelectorAll('.result-card').forEach(card => {
+                    const isProduct = card.querySelector('.result-icon.product') !== null;
+                    const isStore = card.querySelector('.result-icon.store') !== null;
+                    let show = true;
+                    if (label === 'Produits') show = isProduct;
+                    else if (label === 'Boutiques') show = isStore;
+                    card.style.display = show ? '' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

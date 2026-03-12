@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeFinder - Boutique</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .store-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+        .store-cover { border-radius: var(--radius-lg); min-height: 320px; background: linear-gradient(135deg, rgba(63,124,255,0.08), rgba(242,182,61,0.06)); display: grid; place-items: center; border: 1px solid var(--border); }
+        .store-cover i { font-size: 4rem; color: var(--text-soft); opacity: 0.2; }
+        .store-heading h1 { font-size: 2rem; letter-spacing: -0.04em; margin-bottom: 6px; }
+        .store-heading .store-type-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.8rem; font-weight: 700; background: rgba(63,124,255,0.1); color: var(--accent-blue); margin-bottom: 16px; }
+        .store-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+        .store-meta-item { padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.88); border: 1px solid var(--border); }
+        .store-meta-item i { color: var(--accent-blue); margin-right: 8px; }
+        .store-meta-item strong { display: block; font-size: 0.95rem; margin-top: 6px; }
+        .store-meta-item span { font-size: 0.82rem; color: var(--text-soft); }
+        .store-products-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 18px; }
+        .store-product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+        .sp-card { padding: 18px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-decoration: none; color: inherit; display: block; transition: transform 0.15s; }
+        .sp-card:hover { transform: translateY(-2px); }
+        .sp-card h4 { font-size: 0.95rem; margin-bottom: 6px; }
+        .sp-card .sp-price { font-weight: 800; font-size: 1.05rem; }
+        .sp-card .sp-stock { font-size: 0.78rem; color: var(--accent-green); font-weight: 600; margin-top: 4px; }
+        .sp-card .sp-stock.low { color: var(--accent-red); }
+        .store-search { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 14px; border: 1px solid var(--border); background: #fff; margin-bottom: 20px; max-width: 400px; }
+        .store-search input { flex: 1; border: none; outline: none; background: transparent; font-size: 0.95rem; }
+        @media (max-width: 768px) { .store-hero { grid-template-columns: 1fr; } .store-meta-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-content">
+            <a href="../../index.html" class="logo-container">
+                <img src="../../assets/logo_temp.png" alt="Logo PokeFinder" class="logo-img">
+                <div class="brand-stack">
+                    <span class="brand-name">Poke<span>Finder</span></span>
+                    <span class="brand-tagline">fiche boutique</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="#" onclick="history.back(); return false;" class="nav-item" aria-label="Retour"><i class="fa-solid fa-arrow-left"></i></a>
+				<a href="../../index.html" class="nav-item"><i class="fa-solid fa-house"></i></a>
+                <a href="store_list.html" class="nav-item">Toutes les boutiques</a>
+                <a href="../Products/product_list.html" class="nav-item">Produits</a>
+            </nav>
+            <div class="header-actions">
+                <a href="../Auth/auth.html" class="nav-link-secondary">Connexion</a>
+                <a href="store_list.html" class="btn btn-primary">Retour liste</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="section-block">
+            <div class="container">
+                <div class="store-hero">
+                    <div class="store-cover animate-up">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="store-heading animate-up">
+                        <span class="store-type-tag"><i class="fa-solid fa-store"></i> Boutique physique</span>
+                        <h1>Johto Cards Paris</h1>
+                        <p style="color: var(--text-soft); margin-bottom: 8px;">Spécialisé Pokémon TCG depuis 2019. Ouvertures, tournois et bons plans toutes les semaines.</p>
+
+                        <div class="store-meta-grid">
+                            <div class="store-meta-item">
+                                <i class="fa-solid fa-location-dot"></i><span>Adresse</span>
+                                <strong>12 rue du Commerce, Paris 15e</strong>
+                            </div>
+                            <div class="store-meta-item">
+                                <i class="fa-solid fa-clock"></i><span>Horaires</span>
+                                <strong>Lun-Sam 10h-19h</strong>
+                            </div>
+                            <div class="store-meta-item">
+                                <i class="fa-solid fa-phone"></i><span>Téléphone</span>
+                                <strong>01 23 45 67 89</strong>
+                            </div>
+                            <div class="store-meta-item">
+                                <i class="fa-solid fa-boxes-stacked"></i><span>Produits en stock</span>
+                                <strong>142 références</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="container">
+                <h2 class="store-products-title">Produits disponibles dans cette boutique</h2>
+
+                <div class="store-search">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-soft);"></i>
+                    <input type="text" placeholder="Chercher dans ce magasin...">
+                </div>
+
+                <div class="store-product-grid">
+                    <a href="../Products/product.html" class="sp-card animate-up">
+                        <h4>ETB Pokémon 151</h4>
+                        <span class="sp-price">54,99 €</span>
+                        <p class="sp-stock low">3 en stock</p>
+                    </a>
+                    <a href="../Products/product.html" class="sp-card animate-up">
+                        <h4>Display Évolution Céleste</h4>
+                        <span class="sp-price">159,99 €</span>
+                        <p class="sp-stock">8 en stock</p>
+                    </a>
+                    <a href="../Products/product.html" class="sp-card animate-up">
+                        <h4>Booster Prismatique</h4>
+                        <span class="sp-price">5,50 €</span>
+                        <p class="sp-stock">46 en stock</p>
+                    </a>
+                    <a href="../Products/product.html" class="sp-card animate-up">
+                        <h4>Coffret Dresseur UPC</h4>
+                        <span class="sp-price">119,99 €</span>
+                        <p class="sp-stock low">1 en stock</p>
+                    </a>
+                    <a href="../Products/product.html" class="sp-card animate-up">
+                        <h4>ETB Écarlate & Violet</h4>
+                        <span class="sp-price">49,99 €</span>
+                        <p class="sp-stock">15 en stock</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div><div class="brand-name">Poke<span>Finder</span></div></div>
+                <div class="footer-links">
+                    <a href="../../index.html">Accueil</a>
+                    <a href="../../legal.html">Mentions légales</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../index.js" defer></script>
+    <script>
+        document.querySelector('.store-search input').addEventListener('input', function () {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll('.sp-card').forEach(card => {
+                const title = card.querySelector('h4')?.textContent.toLowerCase() || '';
+                card.style.display = title.includes(q) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
